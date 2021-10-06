@@ -1,2 +1,2 @@
 # im31project04
-team name = sbs yes
+project name = to do list
