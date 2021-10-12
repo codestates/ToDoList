@@ -1,42 +1,61 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('NotToDoLists', {
+    await queryInterface.createTable("NotToDoLists", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       list: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING,
       },
-      planned_time: {
-        type: Sequelize.INTEGER
+      startTime: {
+        allowNull: false,
+        type: Sequelize.TIME,
+      },
+      endTime: {
+        allowNull: false,
+        type: Sequelize.TIME,
       },
       time: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+      },
+      startTime_feedback: {
+        type: Sequelize.TIME,
+      },
+      endTime_feedback: {
+        type: Sequelize.TIME,
+      },
+      time_feedback: {
+        type: Sequelize.INTEGER,
       },
       theme: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: "테마 없음",
       },
-      checkBox: {
-        type: Sequelize.STRING
+      date: {
+        allowNull: false,
+        type: Sequelize.DATEONLY,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('NotToDoLists');
-  }
+    await queryInterface.dropTable("NotToDoLists");
+  },
 };

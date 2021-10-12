@@ -53,7 +53,7 @@ function Register() {
 
   return (
     <div>
-      <Link to="/login">
+      <Link to="/">
         <h1>SBS</h1>
       </Link>
       <div className="container" id="container">

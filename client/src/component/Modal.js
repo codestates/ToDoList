@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
 
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -8,7 +8,7 @@ export const ModalBackdrop = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-items: center;
 `;
@@ -29,21 +29,21 @@ export const ModalBtn = styled.button`
   cursor: grab;
 `;
 
-export const ModalView = styled.div.attrs(props => ({
-  role: 'dialog'
+export const ModalView = styled.div.attrs((props) => ({
+  role: "dialog",
 }))`
-    border-radius: 10px;
-    background-color: #ffffff;
-    width: 300px;
-    height: 100px;
-    > div.close_btn {
-      margin-top: 5px;
-      cursor: pointer;
-    }
-    > div.desc {
-      margin-top: 25px;
-      color: #4000c7;
-    }
+  border-radius: 10px;
+  background-color: #ffffff;
+  width: 300px;
+  height: 100px;
+  > div.close_btn {
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  > div.desc {
+    margin-top: 25px;
+    color: #4000c7;
+  }
 `;
 
 export const Modal = () => {
@@ -51,19 +51,23 @@ export const Modal = () => {
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
-  
+
   return (
     <>
       <ModalContainer>
         <ModalBtn onClick={openModalHandler}>
-          {isOpen === false ? 'Open Modal' : 'Opened!'}
+          {isOpen === false ? "Open Modal" : "Opened!"}
         </ModalBtn>
-        {isOpen === true ? <ModalBackdrop onClick={openModalHandler}>
-          <ModalView onClick={(e) => e.stopPropagation()}>
-            <span onClick={openModalHandler} className='close-btn'>&times;</span>
-            <div className='desc'>짜쟌</div>
-          </ModalView>
-        </ModalBackdrop> : null}
+        {isOpen === true ? (
+          <ModalBackdrop onClick={openModalHandler}>
+            <ModalView onClick={(e) => e.stopPropagation()}>
+              <span onClick={openModalHandler} className="close-btn">
+                &times;
+              </span>
+              <div className="desc">짜쟌</div>
+            </ModalView>
+          </ModalBackdrop>
+        ) : null}
       </ModalContainer>
     </>
   );

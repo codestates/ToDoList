@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class ToDoList extends Model {
     /**
@@ -12,17 +10,27 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  ToDoList.init({
-    userId: DataTypes.NUMBER,
-    list: DataTypes.STRING,
-    planned_time: DataTypes.NUMBER,
-    time: DataTypes.NUMBER,
-    theme: DataTypes.STRING,
-    checkBox: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'ToDoList',
-  });
+  }
+  ToDoList.init(
+    {
+      userId: DataTypes.INTEGER,
+      list: DataTypes.STRING,
+      startTime: DataTypes.TIME,
+      endTime: DataTypes.TIME,
+      time: DataTypes.INTEGER,
+      startTime_feedback: DataTypes.TIME,
+      endTime_feedback: DataTypes.TIME,
+      time_feedback: DataTypes.INTEGER,
+      theme: {
+        type: DataTypes.STRING,
+        defaultValue: "테마 없음",
+      },
+      date: DataTypes.DATEONLY,
+    },
+    {
+      sequelize,
+      modelName: "ToDoList",
+    }
+  );
   return ToDoList;
 };

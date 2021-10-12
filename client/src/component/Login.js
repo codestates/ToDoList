@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
-import "./Login.css";
+import "./Register.css";
 
 function Login({ TokenSave }) {
   const [Id, setId] = useState("");
@@ -16,7 +16,7 @@ function Login({ TokenSave }) {
     setPassword(e.target.value);
   };
   useEffect(() => {
-    // console.log(AccessToken);
+    // console.log(AccessToken);--
   }, [AccessToken]);
   const submitHandler = (e) => {
     e.preventDefault();
@@ -35,8 +35,8 @@ function Login({ TokenSave }) {
       })
       .then((res) => {
         // console.log(res.data.data.accessToken);
-        setAccessToken(res.data.data.accessToken);
-        TokenSave(res.data.data.accessToken);
+        setAccessToken(res.data.data.token);
+        TokenSave(res.data.data.token);
         history.push("/");
       });
 
@@ -48,7 +48,7 @@ function Login({ TokenSave }) {
   };
   return (
     <div>
-      <Link to="/register">
+      <Link to="/">
         <h1>SBS</h1>
       </Link>
       <div className="container" id="container">
@@ -70,9 +70,7 @@ function Login({ TokenSave }) {
               onChange={PasswordHandler}
               placeholder="비밀번호"
             />
-            <Link to="/forgotpage">
-            <a >비밀번호를 잊어버리셨나요?</a>
-            </Link>
+            <Link to="/forgotpage">비밀번호를 잊어버리셨나요?</Link>
             <button type="submit">로그인</button>
           </form>
         </div>
