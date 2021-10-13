@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import "./InsertModal.css";
 
 function ToDoCreateModal({ date, userId, changeListHandler }) {
   const [ToDoList, setToDoList] = useState("");

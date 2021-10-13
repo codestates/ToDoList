@@ -124,7 +124,7 @@ function App() {
         />
       </Route>
       <Route exact path="/chart">
-        <Chart UserId={UserId} />
+        <Chart UserId={UserId} ToDoList={ToDoList} />
       </Route>
     </BrowserRouter>
   );

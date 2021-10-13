@@ -52,17 +52,22 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className='center'>
+
       <Link to="/">
-        <h1>SBS</h1>
+      <h1 className='head'>SBS</h1>
+
       </Link>
       <div className="container" id="container">
         <div className="form-container sign-in-container">
           <form onSubmit={submitHandler}>
-            <h1>가입을 시작합니다!</h1>
+          <h1 className='head'>가입을 시작합니다!</h1>
+
             <div className="social-container">{/* Google, kakao auth */}</div>
             <span>아래 내용을 빠짐없이 입력해주세요.</span>
             <input
+            className='login'
+
               required
               type="text"
               value={Id}
@@ -70,6 +75,8 @@ function Register() {
               placeholder="아이디"
             />
             <input
+            className='login'
+
               required
               type="password"
               value={Password}
@@ -77,6 +84,8 @@ function Register() {
               placeholder="비밀번호"
             />
             <input
+            className='login'
+
               required
               type="password"
               value={CheckPassword}
@@ -84,6 +93,8 @@ function Register() {
               placeholder="비밀번호 확인"
             />
             <input
+            className='login'
+
               required
               type="text"
               value={Question}

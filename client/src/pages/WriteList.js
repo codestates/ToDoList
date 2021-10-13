@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./WriteList.css";
 import axios from "axios";
 import CalendarModal from "../component/CalendarModal";
 import ToDoCreateModal from "../component/ToDoCreateModal";
@@ -8,6 +7,8 @@ import ToDoUpdateModal from "../component/ToDoUpdateModal";
 import NotToDoUpdateModal from "../component/NotToDoUpdateModal";
 import ToDoDeleteModal from "../component/ToDoDeleteModal";
 import NotToDoDeleteModal from "../component/NotToDoDeleteModal";
+import "./WriteList.css";
+
 
 export default function WriteList({
   ToDoList,

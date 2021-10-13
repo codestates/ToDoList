@@ -38,7 +38,7 @@ module.exports = {
       },
       theme: {
         allowNull: false,
-        type: Sequelize.JSON,
+        type: Sequelize.STRING,
         defaultValue: "테마 없음",
       },
       date: {

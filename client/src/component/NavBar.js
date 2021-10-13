@@ -65,10 +65,10 @@ function NavBar({ AccessToken }) {
   };
 
   return (
-    <nav className="navigation">
-      <ul className="menu">
+    <nav className="navigation navBar-nav">
+      <ul className="menu navBar-menu">
         <img src="/a.png" width="50px" />
-        <li className="li">
+        <li className="li navBar-li">
           <Link to="/showlist">
             <svg className="home" width="30px" height="30px"></svg>
             <span title="home">Show List</span>

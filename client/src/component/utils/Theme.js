@@ -36,15 +36,18 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
   // 테마 한개가 추가될때
   useEffect(() => {
     axios.get(`https://localhost:5000/allTheme/${UserId}`).then((res) => {
-      console.log(res.data.allTheme);
-      let newThemeColor = [...ThemeColor];
-      newThemeColor.push(res.data.allTheme[res.data.allTheme.length - 1].color);
-      setThemeColor(newThemeColor);
 
-      let newThemeName = [...ThemeName];
-      newThemeName.push(res.data.allTheme[res.data.allTheme.length - 1].name);
-      setThemeName(newThemeName);
-      changeListHandler();
+      if (res.data.allTheme[res.data.allTheme.length - 1]) {
+        console.log(res.data.allTheme);
+        let newThemeColor = [...ThemeColor];
+        newThemeColor.push(res.data.allTheme[res.data.allTheme.length - 1].color);
+        setThemeColor(newThemeColor);
+      
+        let newThemeName = [...ThemeName];
+        newThemeName.push(res.data.allTheme[res.data.allTheme.length - 1].name);
+        setThemeName(newThemeName);
+        changeListHandler();
+      }
     });
   }, [ThemeStatus]);
 
@@ -74,8 +77,7 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
 
     // let newThemeName = [...ThemeName];
     // newThemeName.push(Name);
-    // setThemeName(newThemeName);
-
+    // setThemeName(newThemeName)
     let body = {
       userId: UserId,
       name: Name,

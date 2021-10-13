@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
-import "./Card.css";
+import "../Register.css";
+import welcome from "../../images/WELCOME.jpg"
+import enjoy from'../../images/ENJOY-3.jpg'
+import todo from '../../images/TO DO-2.jpg'
 
-export default function Slide({ id }) {
+export default function ImageSlide() {
+ 
+
+ const [Images,setImages]=useState(welcome) 
+const click = ()=>{
+if(Images === welcome){
+  setImages(enjoy)
+}else if(Images === enjoy){
+  setImages(todo)
+}else{
+  setImages(welcome)
+}
+} 
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        marginBottom: "2rem",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      img 구현
-    </div>
+    <img className='background'src={Images} onClick={click}></img>
   );
 }

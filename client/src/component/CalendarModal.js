@@ -22,13 +22,15 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalBtn = styled.button`
-  background-color: #4000c7;
+  background-color: #FE2790;
   text-decoration: none;
   border: none;
   padding: 15px;
   color: white;
   border-radius: 30px;
-  cursor: grab;
+  cursor: pointer;
+  opacity: 0.8;
+  font-size : 1em;
 `;
 
 export const ModalView = styled.div.attrs(props => ({
@@ -59,7 +61,7 @@ function CalendarModal ( {setDate} ) {
     <>
     <ModalContainer>
         <ModalBtn onClick={openModalHandler}>
-          {isOpen === false ? '날짜 변경하기' : '날짜 변경중'}
+          {isOpen === false ? 'Calendar' : 'Change'}
         </ModalBtn>
         {isOpen === true ? <ModalBackdrop>
             <PickDate setSimpleDate={setDate} />

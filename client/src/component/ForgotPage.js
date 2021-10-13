@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
-import "./Login.css";
+import "./Register.css";
 
 function ForgotPage() {
   const [Id, setId] = useState("");

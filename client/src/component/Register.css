@@ -1,37 +1,81 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Abel");
 
-* {
-  box-sizing: border-box;
+#root {
+  height: 100%;
+  width: max-content;
+  
 }
-
 body {
+  background: #f6f5f7;
+  /* display: flex; */
+  justify-content: center;
+  /* align-items: center; */
+  /* flex-direction: column; */
+  
+  margin: -20px 0 50px;
+}
+.forland{
   background: #f6f5f7;
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
-  font-family: "Montserrat", sans-serif;
   height: 100vh;
   margin: -20px 0 50px;
 }
 
-h1 {
+.head {
   font-weight: bold;
   margin: 0;
+  color: rgb(0, 0, 0);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 15px;
+  font-family: "Montserrat", sans-serif;
 }
+
 
 h2 {
-  text-align: center;
-}
+    font-size: 30px;
+    color: black;
+    text-transform: uppercase;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
 
 p {
-  font-size: 14px;
-  font-weight: 100;
   line-height: 20px;
   letter-spacing: 0.5px;
   margin: 20px 0 30px;
 }
-
+.center{
+  justify-content: center;
+}
+.currentSlide{
+  display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     width: 100%;
+     overflow: hidden;
+}
+.slideButton{
+  all: initial;
+  justify-content: center;
+     border: 1px solid coral;
+     padding: 0.5em 1em;
+     color: coral;
+     border-radius: 10px;
+     margin:0rem 1rem 2rem;
+     
+}
+.forcenter{
+  justify-content: center;
+}
 span {
   font-size: 12px;
 }
@@ -80,12 +124,15 @@ form {
   text-align: center;
 }
 
-input {
+
+.login{
   background-color: #eee;
   border: none;
   padding: 12px 15px;
-  margin: 8px 0;
+  margin: 5px;
   width: 100%;
+  width:300px;
+  height:40px;
 }
 
 .container {
@@ -249,4 +296,224 @@ footer i {
 footer a {
   color: #3c97bf;
   text-decoration: none;
+}
+
+
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  .tbl-header {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  .tbl-content {
+    height: 300px;
+    overflow-x: auto;
+    margin-top: 0px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  th {
+    padding: 20px 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 15px;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 12px;
+    color: #fff;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+  }
+  
+  
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.card {
+  width: 95vh;
+  height: 250px;
+  background-color: #fff;
+  background: linear-gradient(#f8f8f8, #fff);
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  margin: 1.5rem;
+  display: block;
+}
+
+.card h1 {
+  text-align: center;
+}
+
+.card .additional {
+  position: absolute;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(#ff416c, #da738b);
+  transition: width 0.4s;
+  overflow: hidden;
+}
+
+.card .additional .user-card {
+  width: 150px;
+  height: 100%;
+  position: relative;
+  float: left;
+}
+
+.card .additional .user-card::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 10%;
+  right: -2px;
+  height: 80%;
+  border-left: 2px solid rgba(0, 0, 0, 0.025);
+}
+
+.card .additional .user-card .level,
+.card .additional .user-card .points {
+  top: 15%;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.125rem 0.75rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.card .additional .user-card .points {
+  top: 85%;
+}
+
+.card .additional .user-card svg {
+  top: 50%;
+}
+
+.card .additional .more-info {
+  width: 300px;
+  float: left;
+  position: absolute;
+  left: 150px;
+  height: 100%;
+}
+
+.card .additional .more-info h1 {
+  color: #fff;
+  margin-bottom: 0;
+}
+
+.card .additional .coords {
+  margin: 0 1rem;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.card .additional .coords span + span {
+  float: right;
+}
+
+.card .additional .stats {
+  font-size: 2rem;
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  top: auto;
+  color: #fff;
+}
+
+.card .additional .stats > div {
+  flex: 1;
+  text-align: center;
+}
+
+.card .additional .stats i {
+  display: block;
+}
+
+.card .additional .stats div.title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card .additional .stats div.value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.card .additional .stats div.value.infinity {
+  font-size: 2.5rem;
+}
+
+.card .general {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  padding: 1rem;
+  padding-top: 0;
+  text-align: center;
+}
+
+.card .general .more {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.9em;
+}
+
+.background{
+  width:100vh;
+  height: 100%;
+  border-radius: 20px ;
+}
+.centerButton{
+  align-items: center;
+}
+.for{
+  width: 70vh;
+  height: 70vh;
+  border-radius: 20px;
+  float: left;
+}
+.buttonfor{
+ 
+    justify-content: center;
+    border: 1px solid coral;
+    padding: 0.5em 1em;
+    color: coral;
+    border-radius: 10px;
+    margin: 1rem 4rem;
+    display: flex !important;
+}
+.nodot{
+  list-style: none;
+  /* width:200px; */
+  float: left;
+  
+}
+.acenter{
+  text-align: center;
+}
+.clickchange{
+  font-family: "DM Sans", sans-serif;;
 }

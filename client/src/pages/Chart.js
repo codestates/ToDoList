@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Pie } from "react-chartjs-2";
+import BarChart from '../component/BarChart'
 
-function Chart({ UserId }) {
+function Chart({ UserId, ToDoList }) {
   const [Labels, setLabels] = useState([]);
   const [Color, setColor] = useState([]);
 
@@ -23,7 +24,7 @@ function Chart({ UserId }) {
     });
 
     // Calculate 시간 가져오기
-  }, []);
+  }, [ToDoList]);
 
   const data = {
     labels: Labels,
@@ -39,6 +40,8 @@ function Chart({ UserId }) {
     <div>
       <h2>Pie Example</h2>
       <Pie data={data} />
+      <br></br>
+      <BarChart UserId={UserId} ToDoList={ToDoList} />
     </div>
   );
 }
