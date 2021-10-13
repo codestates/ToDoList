@@ -9,22 +9,33 @@ function NavBar({ AccessToken }) {
   const [Login, setLogin] = useState("login");
   let history = useHistory();
 
-  const tokenHandler = () => {
-    if (Token !== "") {
-      setisLogin(!isLogin);
-      setLogin("logout");
-    } else {
-      setisLogin(isLogin);
-    }
-  };
+  useEffect(() => {
+    axios
+      .post(
+        "https://localhost:5000/user",
+        {
+          headers: {
+            Cookie: `token=${AccessToken}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setLogin("logout");
+        setisLogin(true);
+        // id 저장하고, 그 id로 다시 todo list post 요청
+        // console.log(res.data.userInfo);
+      });
+  }, []);
 
-  const mypageHandler = () => {
-    if (Token !== "") {
-      history.push("/navbar");
-    } else {
-      history.push("/mypage");
-    }
-  };
+  // const tokenHandler = () => {
+  //   if (Token !== "") {
+  //     setisLogin(!isLogin);
+  //     setLogin("logout");
+  //   } else {
+  //     setisLogin(isLogin);
+  //   }
+  // };
 
   const LogOutHandler = (e) => {
     e.preventDefault();
@@ -42,6 +53,8 @@ function NavBar({ AccessToken }) {
           { withCredentials: true }
         )
         .then((res) => {
+          setisLogin(!isLogin);
+          setLogin("login");
           console.log(res.data);
         });
       // history.push("/");
@@ -52,10 +65,10 @@ function NavBar({ AccessToken }) {
   };
 
   return (
-    <nav className="navigation" onLoad={tokenHandler}>
-      <ul className="menu">
+    <nav className="navigation navBar-nav">
+      <ul className="menu navBar-menu">
         <img src="/a.png" width="50px" />
-        <li className="li">
+        <li className="li navBar-li">
           <Link to="/showlist">
             <svg className="home" width="30px" height="30px"></svg>
             <span title="home">Show List</span>
@@ -67,12 +80,10 @@ function NavBar({ AccessToken }) {
             <span title="home">List</span>
           </Link>
         </li>
-        <li onClick={mypageHandler}>
-          <Link to="/mypage">
-            <svg className="login" width="30px" height="30px"></svg>
-            <span title="login">my page</span>
-          </Link>
-        </li>
+        <Link to="/mypage">
+          <svg className="login" width="30px" height="30px"></svg>
+          <span title="login">my page</span>
+        </Link>
         <li onClick={LogOutHandler}>
           <Link to="/">
             <svg className="login" width="30px" height="30px"></svg>

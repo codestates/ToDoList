@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import "./InsertModal.css";
 
-function ToDoCreateModal({ date, userId }) {
+function ToDoCreateModal({ date, userId, changeListHandler }) {
   const [ToDoList, setToDoList] = useState("");
   const [ToDoStartTime, setToDoStartTime] = useState("00:00");
   const [ToDoEndTime, setToDoEndTime] = useState("00:00");
-  const [ToDoTheme, setToDoTheme] = useState();
+  const [ToDoThemeName, setToDoThemeName] = useState([]);
+  const [TodoTheme, setTodoTheme] = useState("");
 
   const ToDoListHandler = (e) => {
     setToDoList(e.target.value);
@@ -20,10 +20,6 @@ function ToDoCreateModal({ date, userId }) {
     setToDoEndTime(e.target.value);
   };
 
-  const ToDoThemeHandler = (e) => {
-    setToDoTheme(e.target.value);
-  };
-
   const addToDoListHandler = (e) => {
     // create 요청 핸들러
     e.preventDefault();
@@ -32,7 +28,7 @@ function ToDoCreateModal({ date, userId }) {
       list: ToDoList,
       startTime: ToDoStartTime,
       endTime: ToDoEndTime,
-      theme: ToDoTheme,
+      theme: TodoTheme,
       date: date,
     };
     axios
@@ -42,10 +38,32 @@ function ToDoCreateModal({ date, userId }) {
       })
       .then((res) => {
         console.log(res);
+        changeListHandler();
       })
       .catch((err) => {
         console.log(err);
       });
+
+    // theme update- > todo id 연결 update 서버 api
+  };
+
+  // axios로 theme 불러와서 themename만 저장
+
+  useEffect(() => {
+    axios.get(`https://localhost:5000/allTheme/${userId}`).then((res) => {
+      console.log(res.data.allTheme);
+      let newNotToDoThemeName = [...ToDoThemeName];
+      res.data.allTheme.forEach((theme) => {
+        newNotToDoThemeName.push(theme.name);
+      });
+      setToDoThemeName(newNotToDoThemeName);
+    });
+  }, []);
+
+  const ThemeHandler = (e) => {
+    e.preventDefault();
+    setTodoTheme(e.target.value);
+    // console.log(e.target.value);
   };
 
   return (
@@ -68,7 +86,15 @@ function ToDoCreateModal({ date, userId }) {
           />
 
           <label>THEME: </label>
-          <input type="text" onChange={ToDoThemeHandler} placeholder="THEME" />
+          <select name="theme" id="theme-select" onChange={ThemeHandler}>
+            <option value="">--Please choose an THEME--</option>
+            {ToDoThemeName &&
+              ToDoThemeName.map((a, index) => (
+                <option key={index} value={a}>
+                  {a}
+                </option>
+              ))}
+          </select>
 
           <button type="submit" onClick={addToDoListHandler}>
             SUBMIT

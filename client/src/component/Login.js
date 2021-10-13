@@ -47,9 +47,10 @@ function Login({ TokenSave }) {
     history.push("/register");
   };
   return (
-    <div>
+    <div className='center'>
+
       <Link to="/">
-        <h1>SBS</h1>
+      <h1 className='head'>SBS</h1>
       </Link>
       <div className="container" id="container">
         <div className="form-container sign-in-container">
@@ -59,12 +60,16 @@ function Login({ TokenSave }) {
             <div className="social-container"></div>
             <span></span>
             <input
+            className='login'
+
               type="text"
               value={Id}
               onChange={IdHandler}
               placeholder="아이디"
             />
             <input
+            className='login'
+
               type="password"
               value={Password}
               onChange={PasswordHandler}

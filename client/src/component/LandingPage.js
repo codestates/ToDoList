@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from "react";
-
+import {Link} from 'react-router-dom'
 import axios from "axios";
-import { Modal } from "./Modal";
 import Slider from "./utils/Slider";
+import Slide from "./utils/Slide";
+import "./sass.scss"
+import ImageSlide from "./utils/ImgSlider";
+import images from "./images"
 
 function LandingPage({ AccessToken }) {
   const [Token, setToken] = useState("");
   const [UserName, setUserName] = useState("");
   const [AllUser, setAllUser] = useState(0);
+  const [Images, setImages] = useState(images[0].src)
+
+  const a =()=>{
+    setImages(images[0].src)
+  }
+  const b =()=>{
+  setImages(images[1].src)
+ }
+ const c =()=>{
+  setImages(images[2].src)
+ }
+
 
   useEffect(() => {
     setToken(AccessToken);
@@ -35,23 +50,30 @@ function LandingPage({ AccessToken }) {
   }, [UserName]);
 
   return (
-    <div>
-      {/* NavBar */}
-      <Slider />
+    <>
+    <div className='projects-section' >
+    <div className='projects-section-header'>
+      <Link to='/'><p>SBS</p></Link>
+<Link to='/mypage'><p className='time'>{UserName}님 반갑습니다!</p ></Link>
+</div>
 
-      {UserName && <div>환영합니다. {UserName}</div>}
-      {AllUser && (
-        <div>
-          SBS팀의 To Do List는 총 {AllUser}명의 사용자와 함께 하고 있습니다.
-        </div>
-      )}
+        
+<div></div>
+<ImageSlide />
+<Slider />
+<div>
+  
+<ul className='nodot'>
+  <div className='clickchange'>아래 버튼을 눌러 기능을 확인해 보세요!</div>
+<li className='buttonfor' onClick={a}><span>TODO</span></li>
+<li className='buttonfor' onClick={b}><span>NOT TO DO</span></li>
+<li className='buttonfor' onClick={c}><span>LIST</span></li>
+</ul>
+<img className='for' src={Images} />
+</div>
+</div> 
 
-      {/* Modal */}
-      <Modal />
-      {/* Slider */}
-      <Slider />
-    </div>
-  );
+ </> );
 }
 
 export default LandingPage;

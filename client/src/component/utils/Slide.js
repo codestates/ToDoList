@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Card.css";
+import "../Register.css";
 
 export default function Slide({ id }) {
   const username = ["김명현", "홍민혁", "김지윤", "장동혁"];
@@ -15,15 +15,7 @@ export default function Slide({ id }) {
   }, [id]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        marginBottom: "2rem",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <>
       <div className="card">
         <div className="additional">
           <div className="user-card">
@@ -37,6 +29,6 @@ export default function Slide({ id }) {
           <span className="more">팀원 Position : {UserPosition}</span>
         </div>
       </div>
-    </div>
+  </>
   );
 }

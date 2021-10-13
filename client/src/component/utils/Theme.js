@@ -1,31 +1,92 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function Theme({ AccessToken }) {
+function Theme({ AccessToken, UserId, changeListHandler }) {
   const [ThemeColor, setThemeColor] = useState([]);
+  const [ThemeStatus, setThemeStatus] = useState(false);
   const [ThemeName, setThemeName] = useState([]);
   const [Name, setName] = useState("");
   const [Color, setColor] = useState("");
   const [Token, setToken] = useState("");
+  const [ThemeEditModalStatus, setThemeEditModalStatus] = useState(false);
+
+  const [EditName, setEditName] = useState("");
+  const [EditColor, setEditColor] = useState("");
+  const [DefaultName, setDefaultName] = useState("");
+
+  useEffect(() => {
+    setToken(AccessToken);
+    // console.log(AccessToken);
+    // post 요청해서 로그인한 id,pw 보여주기 -> NavBar에 ~님 환영합니다
+    axios
+      .post(
+        "https://localhost:5000/user",
+        {
+          headers: {
+            Cookie: `token=${Token}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        // console.log(res);
+      });
+  });
+
+  // 테마 한개가 추가될때
+  useEffect(() => {
+    axios.get(`https://localhost:5000/allTheme/${UserId}`).then((res) => {
+
+      if (res.data.allTheme[res.data.allTheme.length - 1]) {
+        console.log(res.data.allTheme);
+        let newThemeColor = [...ThemeColor];
+        newThemeColor.push(res.data.allTheme[res.data.allTheme.length - 1].color);
+        setThemeColor(newThemeColor);
+      
+        let newThemeName = [...ThemeName];
+        newThemeName.push(res.data.allTheme[res.data.allTheme.length - 1].name);
+        setThemeName(newThemeName);
+        changeListHandler();
+      }
+    });
+  }, [ThemeStatus]);
+
+  // 처음 렌더링될때 테마 DB에서 가져오기
+  useEffect(() => {
+    axios.get(`https://localhost:5000/allTheme/${UserId}`).then((res) => {
+      console.log(res.data.allTheme);
+      let newThemeColor = [...ThemeColor];
+      res.data.allTheme.forEach((theme) => {
+        newThemeColor.push(theme.color);
+      });
+      setThemeColor(newThemeColor);
+
+      let newThemeName = [...ThemeName];
+      res.data.allTheme.forEach((theme) => {
+        newThemeName.push(theme.name);
+      });
+      setThemeName(newThemeName);
+    });
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    let newThemeColor = [...ThemeColor];
-    newThemeColor.push(Color);
-    setThemeColor(newThemeColor);
+    // let newThemeColor = [...ThemeColor];
+    // newThemeColor.push(Color);
+    // setThemeColor(newThemeColor);
 
-    let newThemeName = [...ThemeName];
-    newThemeName.push(Name);
-    setThemeName(newThemeName);
-
-    // let body ={
-    //   userId: ,
-    //   name: ,
-    //   image: ,
-    //   color: ,
-    //   toDo_id: ,
-    //   notToDo_Id:
-    // }
+    // let newThemeName = [...ThemeName];
+    // newThemeName.push(Name);
+    // setThemeName(newThemeName)
+    let body = {
+      userId: UserId,
+      name: Name,
+      color: Color,
+    };
+    axios.post("https://localhost:5000/theme", body).then((res) => {
+      console.log(res.data);
+      setThemeStatus(!ThemeStatus);
+    });
   };
   const ColorHandler = (e) => {
     // console.log(e.target.value);
@@ -35,6 +96,73 @@ function Theme({ AccessToken }) {
   const NameHandler = (e) => {
     // console.log(e.target.value);
     setName(e.target.value);
+  };
+
+  const ThemeEditHandler = (name) => {
+    axios
+      .get(`https://localhost:5000/getTheme/${name}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.editTheme);
+        setDefaultName(res.data.editTheme.name);
+      });
+
+    setThemeEditModalStatus(!ThemeEditModalStatus);
+  };
+
+  const EditNameHandler = (e) => {
+    setEditName(e.target.value);
+  };
+  const EditColorHandler = (e) => {
+    setEditColor(e.target.value);
+  };
+
+  const updateThemeHandler = (e) => {
+    console.log("초기 name", DefaultName);
+    console.log("업데이트 name", EditName);
+    console.log("업데이트 Color", EditColor);
+
+    let data = {
+      defaultname: DefaultName,
+      editname: EditName,
+      editcolor: EditColor,
+    };
+
+    axios
+      .patch("https://localhost:5000/updateTheme", data, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setThemeStatus(!ThemeStatus);
+        changeListHandler();
+
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const deleteHandler = (e) => {
+    axios
+      .delete(
+        "https://localhost:5000/deletetheme",
+        { params: { name: DefaultName } },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setThemeStatus(!ThemeStatus);
+        changeListHandler();
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div>
@@ -67,6 +195,9 @@ function Theme({ AccessToken }) {
         {ThemeColor.map((color, index) => {
           return (
             <div
+              onClick={(e) => {
+                ThemeEditHandler(e.target.innerHTML);
+              }}
               key={index}
               style={{
                 backgroundColor: color,
@@ -84,6 +215,37 @@ function Theme({ AccessToken }) {
             </div>
           );
         })}
+        <br />
+        {ThemeEditModalStatus ? (
+          <form>
+            <label>Name</label>
+            <input
+              type="text"
+              placeholder={DefaultName}
+              value={EditName}
+              onChange={EditNameHandler}
+            />
+            <label>Color</label>
+            <input
+              style={{
+                width: "3rem",
+                height: "2rem",
+                padding: "0.2rem",
+                backgroundColor: "grey",
+                marginRight: "1rem",
+              }}
+              type="color"
+              value={EditColor}
+              onChange={EditColorHandler}
+            />
+            <button onClick={deleteHandler} type="submit">
+              삭제
+            </button>
+            <button onClick={updateThemeHandler} type="submit">
+              변경
+            </button>
+          </form>
+        ) : null}
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.TIME,
       },
       time: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10, 1),
       },
       startTime_feedback: {
         type: Sequelize.TIME,
@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.TIME,
       },
       time_feedback: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10, 1),
       },
       theme: {
         allowNull: false,

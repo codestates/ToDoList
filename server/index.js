@@ -6,6 +6,8 @@ const https = require("https");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const controllers = require("./controllers");
+const TimeControllers = require("./controllers/SumTimeFeedback")
+const PlanedTimeControllers = require("./controllers/SumTime")
 
 const ToDoRouter = require("./routes/ToDoList.js");
 const NotToDoRouter = require("./routes/NotToDoList");
@@ -30,9 +32,16 @@ app.post("/login", controllers.login);
 app.post("/logout", controllers.logout);
 app.post("/register", controllers.register);
 app.post("/user", controllers.user);
+app.post("/theme", controllers.theme);
 app.get("/alluser", controllers.alluser);
+app.get("/getTheme/:name", controllers.getTheme);
+app.get("/allTheme/:userId", controllers.allTheme);
 app.post("/forgotpage", controllers.forgotpage);
 app.post("/changepassword", controllers.changepassword);
+app.patch("/updateTheme", controllers.updateTheme);
+app.delete("/deletetheme", controllers.deletetheme);
+app.get("/time", TimeControllers)
+app.get("/plannedTime", PlanedTimeControllers)
 
 app.use("/todo", ToDoRouter);
 app.use("/nottodo", NotToDoRouter);

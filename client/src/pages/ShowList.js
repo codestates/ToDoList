@@ -1,73 +1,15 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+import "./ShowList.css"
 
-const Title = styled.div`
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 700;
-  opacity: 0.9;
-  margin: 0;
-  color: var(--main-color);
-`;
+
 
 const Container = styled.div`
   text-align: center;
   height: 40rem;
   margin: 20px auto;
-`;
-
-const BoxFlexContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const Box = styled.div`
-  --main-color-card: #9980fa;
-  background-color: #d980fa;
-  border-radius: 10px;
-  padding: 20px;
-  margin: auto;
-  width: 15rem;
-  margin: 1rem;
-  flex-grow: 1 auto;
-`;
-
-const ThemeListTimeContanier = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const ThemeContanier = styled.div`
-  display: flex;
-  height: 4em;
-  align-items: center;
-`;
-
-const ListTimeContanier = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 4em;
-  justify-content: center;
-  flex-grow: 1;
-`;
-
-const List = styled.div`
-  font-size: 16px;
-  flex: 1 1 auto;
-  text-align: center;
-`;
-
-const Time = styled.div`
-  font-size: 16px;
-  flex: 1 1 auto;
-  text-align: center;
-`;
-
-const Theme = styled.div`
-  font-size: 16px;
-  flex: 1 1 auto;
-  vertical-align: middle;
 `;
 
 export default function ShowList({
@@ -76,68 +18,120 @@ export default function ShowList({
   ToDoListHandler,
   NotToDoListHandler,
   UserId,
+  date,
+  AccessToken,
 }) {
   useEffect(() => {
     console.log(UserId);
-    ToDoListHandler(UserId);
-    NotToDoListHandler(UserId);
+    axios
+      .post(
+        "https://localhost:5000/user",
+        {
+          headers: {
+            Cookie: `token=${AccessToken}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        // console.log(res.data.userInfo);
+        ToDoListHandler(res.data.userInfo.id);
+        NotToDoListHandler(res.data.userInfo.id);
+        // id 저장하고, 그 id로 다시 todo list post 요청
+      });
   }, []);
 
   return (
     <>
+    <div className="projects-section"> <div class="projects-section-header"><p>Projects</p><p class="time">{date}</p> </div> 
       {ToDoList || NotToDoList ? (
         <>
           {ToDoList ? (
-            <>
-              <Title>To Do List</Title>
-              <br></br>
-              <BoxFlexContainer>
-                {ToDoList.map((list) => (
-                  <Box key={list.id}>
-                    <ThemeListTimeContanier>
-                      <ThemeContanier>
-                        <Theme>{list.theme}</Theme>
-                      </ThemeContanier>
-                      <ListTimeContanier>
-                        <List>{list.list}</List>
-                        <Time>{list.planned_time}</Time>
-                      </ListTimeContanier>
-                    </ThemeListTimeContanier>
-                  </Box>
-                ))}
-              </BoxFlexContainer>
-            </>
+            <div className="app-container">
+            <div className = "app-content">
+              <div className = "projects-seaction">
+                <div className = "pojects-section-header">
+                  <p>Projects</p>
+                  <p className="time">Decemder, 12</p>
+                </div>
+                <div className = "projects-boxes jsGridView">
+                  <div className="project-box-wrapper">
+                    <div className="project-box" style={{ backgroundColor: "#fee4cd" }}>
+                      <div className="project-box-header">
+                        <span>December 10, 2020</span>
+                        <div className="more-wrapper">
+                          <button className="project-btn-more">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-more-vertical">
+                              <circle cx="12" cy="12" r="1" />
+                              <circle cx="12" cy="5" r="1" />
+                              <circle cx="12" cy="19" r="1" /></svg>
+                          </button>
+                        </div>
+                      </div>
+                        <div className="project-box-content-header">
+                          <p className="box-content-header">Web Designing</p>
+                          <p className="box-content-subheader">Prototyping</p>
+                        </div>
+                        <div className="project-box-footer">
+                          <div className="days-left" style={{ color: "#ff942e" }}>
+                            2 Days Left
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
           ) : null}
           <br></br>
           <br></br>
           {NotToDoList ? (
-            <>
-              <Title>Not To Do List</Title>
-              <br></br>
-              <BoxFlexContainer>
-                {NotToDoList.map((list) => (
-                  <Box key={list.id}>
-                    <ThemeListTimeContanier>
-                      <ThemeContanier>
-                        <Theme>{list.theme}</Theme>
-                      </ThemeContanier>
-                      <ListTimeContanier>
-                        <List>{list.list}</List>
-                        <Time>{list.planned_time}</Time>
-                      </ListTimeContanier>
-                    </ThemeListTimeContanier>
-                  </Box>
-                ))}
-              </BoxFlexContainer>
-            </>
+            <div className="app-container">
+            <div className = "app-content">
+              <div className = "projects-seaction">
+                <div className = "pojects-section-header">
+                  <p>Projects</p>
+                  <p className="time">Decemder, 12</p>
+                </div>
+                <div className = "projects-boxes jsGridView">
+                  <div className="project-box-wrapper">
+                    <div className="project-box" style={{ backgroundColor: "#fee4cd" }}>
+                      <div className="project-box-header">
+                        <span>December 10, 2020</span>
+                        <div className="more-wrapper">
+                          <button className="project-btn-more">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-more-vertical">
+                              <circle cx="12" cy="12" r="1" />
+                              <circle cx="12" cy="5" r="1" />
+                              <circle cx="12" cy="19" r="1" /></svg>
+                          </button>
+                        </div>
+                      </div>
+                        <div className="project-box-content-header">
+                          <p className="box-content-header">Web Designing</p>
+                          <p className="box-content-subheader">Prototyping</p>
+                        </div>
+                        <div className="project-box-footer">
+                          <div className="days-left" style={{ color: "#ff942e" }}>
+                            2 Days Left
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
           ) : null}
         </>
       ) : (
         <Container>
-          <h2>To do list를 작성해주세요</h2>
-          <Link to="/list">To do list 작성하러 가기</Link>
+          <h2><p className='h1'>To do list를 작성해주세요</p></h2>
+          <Link to="/list"><button className='pinky'><Link to="/list"><div className='white'>To do list 작성하러 가기</div></Link></button></Link>
         </Container>
       )}
+      </div>
     </>
   );
 }

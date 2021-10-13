@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./WriteList.css";
 import axios from "axios";
 import CalendarModal from "../component/CalendarModal";
 import ToDoCreateModal from "../component/ToDoCreateModal";
@@ -8,6 +7,8 @@ import ToDoUpdateModal from "../component/ToDoUpdateModal";
 import NotToDoUpdateModal from "../component/NotToDoUpdateModal";
 import ToDoDeleteModal from "../component/ToDoDeleteModal";
 import NotToDoDeleteModal from "../component/NotToDoDeleteModal";
+import "./WriteList.css";
+
 
 export default function WriteList({
   ToDoList,
@@ -17,22 +18,43 @@ export default function WriteList({
   date,
   setDate,
   UserId,
+  AccessToken,
 }) {
-  useEffect(() => {
-    console.log(UserId);
-    ToDoListHandler(UserId);
-    NotToDoListHandler(UserId);
-  }, [date]); // 괄호에 date 넣어줄까
-
   console.log("todo:", ToDoList);
   console.log("nottodo", NotToDoList);
 
   //+ 메뉴 모달로 띄우기
   //모달안에 드롭다운으로 투두 낫투두
   //표에 추가하기 o
-
+  const [changeList, setChangeList] = useState(false);
   const [openToDoInsert, setOpenToDoInsert] = useState(false); // create용 모달창 open/close 데이터
   const [openNotToDoInsert, setOpenNotToDoInsert] = useState(false); // create용 모달창 open/close 데이터
+
+  const changeListHandler = () => {
+    // useEffect를 통해 list가 CRUD로 변경될 시 화면에 업데이트 시켜주기 위함
+    console.log("상태 변경");
+    setChangeList(!changeList);
+  };
+
+  useEffect(() => {
+    // 날짜가 바뀔 때마다 ToDoList 및 NotToDoList 데이터 최신화
+    axios
+      .post(
+        "https://localhost:5000/user",
+        {
+          headers: {
+            Cookie: `token=${AccessToken}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        // id 저장하고, 그 id로 다시 todo list post 요청
+        // console.log(res.data.userInfo);
+        ToDoListHandler(res.data.userInfo.id);
+        NotToDoListHandler(res.data.userInfo.id);
+      });
+  }, [date, changeList]);
 
   const OpenToDoInsertModal = () => {
     //ToDoList를 추가하기 위해 모달창을 열고 닫는 핸들러
@@ -100,10 +122,16 @@ export default function WriteList({
                         </td>
                         <td>{todo.theme}</td>
                         <td>
-                          <ToDoUpdateModal id={todo.id} />
+                          <ToDoUpdateModal
+                            id={todo.id}
+                            changeListHandler={changeListHandler}
+                          />
                         </td>
                         <td>
-                          <ToDoDeleteModal id={todo.id} />
+                          <ToDoDeleteModal
+                            id={todo.id}
+                            changeListHandler={changeListHandler}
+                          />
                         </td>
                       </tr>
                     );
@@ -116,7 +144,13 @@ export default function WriteList({
           <div className="add-todo-button" onClick={OpenToDoInsertModal}>
             + click here to add
           </div>
-          {openToDoInsert && <ToDoCreateModal userId={UserId} date={date} />}
+          {openToDoInsert && (
+            <ToDoCreateModal
+              userId={UserId}
+              date={date}
+              changeListHandler={changeListHandler}
+            />
+          )}
         </div>
       </div>
       <div className="list-form">
@@ -151,10 +185,16 @@ export default function WriteList({
                         </td>
                         <td>{nottodo.theme}</td>
                         <td>
-                          <NotToDoUpdateModal id={nottodo.id} />
+                          <NotToDoUpdateModal
+                            id={nottodo.id}
+                            changeListHandler={changeListHandler}
+                          />
                         </td>
                         <td>
-                          <NotToDoDeleteModal id={nottodo.id} />
+                          <NotToDoDeleteModal
+                            id={nottodo.id}
+                            changeListHandler={changeListHandler}
+                          />
                         </td>
                       </tr>
                     );
@@ -168,7 +208,11 @@ export default function WriteList({
             + click here to add
           </div>
           {openNotToDoInsert && (
-            <NotToDoCreateModal userId={UserId} date={date} />
+            <NotToDoCreateModal
+              userId={UserId}
+              date={date}
+              changeListHandler={changeListHandler}
+            />
           )}
         </div>
       </div>
