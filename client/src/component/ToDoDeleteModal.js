@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -10,7 +10,7 @@ export const ModalBackdrop = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-items: center;
 `;
@@ -31,68 +31,76 @@ export const ModalBtn = styled.button`
   cursor: grab;
 `;
 
-export const ModalView = styled.div.attrs(props => ({
+export const ModalView = styled.div.attrs((props) => ({
   // attrs 메소드를 이용해서 아래와 같이 div 엘리먼트에 속성을 추가할 수 있습니다.
-  role: 'dialog'
+  role: "dialog",
 }))`
-    border-radius: 10px;
-    background-color: #ffffff;
-    width: 300px;
-    height: 100px;
-    > div.close_btn {
-      margin-top: 5px;
-      cursor: pointer;
-    }
-    > div.desc {
-      margin-top: 25px;
-      color: #4000c7;
-    }
+  border-radius: 10px;
+  background-color: #ffffff;
+  width: 300px;
+  height: 100px;
+  > div.close_btn {
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  > div.desc {
+    margin-top: 25px;
+    color: #4000c7;
+  }
 `;
 
-function ToDoDeleteModal ( {id} ) {
-    const [isOpen, setIsOpen] = useState(false);
+function ToDoDeleteModal({ id, changeListHandler }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-    const openModalHandler = () => {
-      setIsOpen(!isOpen);
-    };
+  const openModalHandler = () => {
+    setIsOpen(!isOpen);
+  };
 
-    const CloseModalHandler = () => {
-      setIsOpen(!isOpen);
-    }
+  const CloseModalHandler = () => {
+    setIsOpen(!isOpen);
+  };
 
-    const CloseAndDeleteHandler = () => {
-        setIsOpen(!isOpen);
-        submitDeleteHandler()
-      }
+  const CloseAndDeleteHandler = () => {
+    setIsOpen(!isOpen);
+    submitDeleteHandler();
+    changeListHandler();
+  };
 
-      const submitDeleteHandler = () => {  // delete 요청 핸들러
+  const submitDeleteHandler = () => {
+    // delete 요청 핸들러
 
-        axios
-          .delete("https://localhost:5000/todo", {params: {id}}, {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          })
-          .then(res => {
-            console.log(res);
-          })
-          .catch((err)=> {
-            console.log(err)
-          })
-      }
-    
-    return (
-      <>
+    axios
+      .delete(
+        "https://localhost:5000/todo",
+        { params: { id } },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <>
       <ModalContainer>
-          <ModalBtn onClick={openModalHandler}>
-            {isOpen === false ? '삭제하기' : '삭제중'}
-          </ModalBtn>
-          {isOpen === true ? <ModalBackdrop>
-              <ModalBtn onClick={CloseModalHandler}>취소</ModalBtn>
-              <ModalBtn onClick={CloseAndDeleteHandler}>삭제 완료</ModalBtn>
-          </ModalBackdrop> : null}
+        <ModalBtn onClick={openModalHandler}>
+          {isOpen === false ? "삭제하기" : "삭제중"}
+        </ModalBtn>
+        {isOpen === true ? (
+          <ModalBackdrop>
+            <ModalBtn onClick={CloseModalHandler}>취소</ModalBtn>
+            <ModalBtn onClick={CloseAndDeleteHandler}>삭제 완료</ModalBtn>
+          </ModalBackdrop>
+        ) : null}
       </ModalContainer>
-      </>
-    );
+    </>
+  );
 }
 
-export default ToDoDeleteModal
+export default ToDoDeleteModal;

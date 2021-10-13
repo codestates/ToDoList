@@ -9,13 +9,14 @@ import ForgotPage from "./component/ForgotPage";
 import MyPage from "./component/MyPage";
 import NavBar from "./component/NavBar";
 import axios from "axios";
+import Chart from "./pages/Chart";
 
 function App() {
   const [AccessToken, setAccessToken] = useState("");
   const [ToDoList, setToDoList] = useState(null); // [객체, 객체, 객체, ...]
   const [NotToDoList, setNotToDoList] = useState(null);
   const [date, setDate] = useState(getToday(new Date()));
-  const [UserId, setUserId] = useState(0);
+  const [UserId, setUserId] = useState(1);
 
   useEffect(() => {
     axios
@@ -34,7 +35,7 @@ function App() {
         // console.log(res.data.userInfo);
         setUserId(res.data.userInfo.id);
       });
-  }, []);
+  }, [AccessToken]);
 
   const ToDoListHandler = (id) => {
     axios
@@ -94,6 +95,7 @@ function App() {
         <NavBar AccessToken={AccessToken} />
 
         <ShowList
+          AccessToken={AccessToken}
           UserId={UserId}
           ToDoList={ToDoList}
           NotToDoList={NotToDoList}
@@ -103,12 +105,15 @@ function App() {
       </Route>
       <Route exact path="/register" component={Register} />
       <Route exact path="/mypage">
-        <MyPage AccessToken={AccessToken} />
+        <NavBar AccessToken={AccessToken} />
+
+        <MyPage UserId={UserId} AccessToken={AccessToken} />
       </Route>
       <Route exact path="/list">
         <NavBar AccessToken={AccessToken} />
 
         <WriteList
+          AccessToken={AccessToken}
           UserId={UserId}
           ToDoList={ToDoList}
           NotToDoList={NotToDoList}
@@ -117,6 +122,9 @@ function App() {
           date={date}
           setDate={setDate}
         />
+      </Route>
+      <Route exact path="/chart">
+        <Chart UserId={UserId} />
       </Route>
     </BrowserRouter>
   );

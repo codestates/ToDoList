@@ -2,11 +2,12 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "./InsertModal.css";
 
-function NotToDoCreateModal({ date, userId }) {
+function NotToDoCreateModal({ date, userId, changeListHandler }) {
   const [NotToDoList, setNotToDoList] = useState();
   const [NotToDoStartTime, setNotToDoStartTime] = useState();
   const [NotToDoEndTime, setNotToDoEndTime] = useState();
-  const [NotToDoTheme, setNotToDoTheme] = useState();
+  const [NotToDoTheme, setNotTodoTheme] = useState("");
+  const [NotToDoThemeName, setNotToDoThemeName] = useState([]);
 
   const NotToDoListHandler = (e) => {
     setNotToDoList(e.target.value);
@@ -18,10 +19,6 @@ function NotToDoCreateModal({ date, userId }) {
 
   const NotToDoEndTimeHandler = (e) => {
     setNotToDoEndTime(e.target.value);
-  };
-
-  const NotToDoThemeHandler = (e) => {
-    setNotToDoTheme(e.target.value);
   };
 
   const NotaddToDoListHandler = (e) => {
@@ -41,11 +38,36 @@ function NotToDoCreateModal({ date, userId }) {
       })
       .then((res) => {
         console.log(res.data);
+        changeListHandler();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const ThemeHandler = (e) => {
+    e.preventDefault();
+    setNotTodoTheme(e.target.value);
+    // console.log(e.target.value);
+  };
+
+  // axios로 theme 불러와서 themename만 저장
+
+  useEffect(() => {
+    axios
+      .get(`https://localhost:5000/allTheme/${userId}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.allTheme);
+        let newNotToDoThemeName = [...NotToDoThemeName];
+        res.data.allTheme.forEach((theme) => {
+          newNotToDoThemeName.push(theme.name);
+        });
+        setNotToDoThemeName(newNotToDoThemeName);
+      });
+  }, []);
 
   return (
     <>
@@ -66,11 +88,20 @@ function NotToDoCreateModal({ date, userId }) {
             placeholder="END TIME"
           />
           <label>THEME: </label>
-          <input
+          <select name="theme" id="theme-select" onChange={ThemeHandler}>
+            <option value="">--Please choose an THEME--</option>
+            {NotToDoThemeName &&
+              NotToDoThemeName.map((a, index) => (
+                <option key={index} value={a}>
+                  {a}
+                </option>
+              ))}
+          </select>
+          {/* <input
             type="text"
             onChange={NotToDoThemeHandler}
             placeholder="THEME"
-          />
+          /> */}
           <button type="submit" onClick={NotaddToDoListHandler}>
             O submit
           </button>

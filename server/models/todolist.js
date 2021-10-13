@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       endTime_feedback: DataTypes.TIME,
       time_feedback: DataTypes.INTEGER,
       theme: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         defaultValue: "테마 없음",
       },
       date: DataTypes.DATEONLY,

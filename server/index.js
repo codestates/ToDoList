@@ -30,9 +30,14 @@ app.post("/login", controllers.login);
 app.post("/logout", controllers.logout);
 app.post("/register", controllers.register);
 app.post("/user", controllers.user);
+app.post("/theme", controllers.theme);
 app.get("/alluser", controllers.alluser);
+app.get("/getTheme/:name", controllers.getTheme);
+app.get("/allTheme/:userId", controllers.allTheme);
 app.post("/forgotpage", controllers.forgotpage);
 app.post("/changepassword", controllers.changepassword);
+app.patch("/updateTheme", controllers.updateTheme);
+app.delete("/deletetheme", controllers.deletetheme);
 
 app.use("/todo", ToDoRouter);
 app.use("/nottodo", NotToDoRouter);

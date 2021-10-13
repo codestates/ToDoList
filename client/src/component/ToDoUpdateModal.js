@@ -49,7 +49,7 @@ export const ModalView = styled.div.attrs((props) => ({
   }
 `;
 
-function ToDoUpdateModal({ id, checkList }) {
+function ToDoUpdateModal({ id, changeListHandler }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const [toDoId, setToDoId] = useState(0);
@@ -140,7 +140,7 @@ function ToDoUpdateModal({ id, checkList }) {
         withCredentials: true,
       })
       .then((res) => {
-        checkList(false);
+        changeListHandler();
         console.log(res);
       })
       .catch((err) => {
@@ -159,32 +159,28 @@ function ToDoUpdateModal({ id, checkList }) {
             <form>
               <label>LIST: </label>
               <input type="text" onChange={ListHandler} value={list} />
-
               <label>START TIME: </label>
               <input
                 type="time"
                 onChange={StartTimeHandler}
                 value={startTime}
               />
-
               <label>END TIME: </label>
               <input type="time" onChange={EndTimeHandler} value={endTime} />
-
               <label>START TIME(feedback) </label>
               <input
                 type="time"
                 onChange={StartTime_feedbackHandler}
                 value={startTime_feedback}
               />
-
               <label>END TIME(feedback) </label>
               <input
                 type="time"
                 onChange={EndTime_feedbackHandler}
                 value={endTime_feedback}
               />
-
               <label>THEME: </label>
+              // userId로 불러와서 todocreatemodal처럼 선택할수있게 select 추가
               <input type="text" onChange={ThemeHandler} value={theme} />
             </form>
             <ModalBtn onClick={CloseModalHandler}>수정 완료</ModalBtn>

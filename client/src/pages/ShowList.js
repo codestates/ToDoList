@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 const Title = styled.div`
   font-size: 24px;
@@ -76,11 +77,26 @@ export default function ShowList({
   ToDoListHandler,
   NotToDoListHandler,
   UserId,
+  AccessToken,
 }) {
   useEffect(() => {
     console.log(UserId);
-    ToDoListHandler(UserId);
-    NotToDoListHandler(UserId);
+    axios
+      .post(
+        "https://localhost:5000/user",
+        {
+          headers: {
+            Cookie: `token=${AccessToken}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        // console.log(res.data.userInfo);
+        ToDoListHandler(res.data.userInfo.id);
+        NotToDoListHandler(res.data.userInfo.id);
+        // id 저장하고, 그 id로 다시 todo list post 요청
+      });
   }, []);
 
   return (

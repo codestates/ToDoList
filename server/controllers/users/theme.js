@@ -1,16 +1,15 @@
 const { Theme } = require("../../models");
 module.exports = async (req, res) => {
+  const { userId, name, color } = req.body;
+
   const themeInfo = await Theme.findOne({
-    where: { userId: req.body.userId },
+    where: { userId: userId, name: name },
   });
   if (!themeInfo) {
     Theme.create({
-      //   userId: ,
-      //   name: ,
-      //   image: ,
-      //   color: ,
-      //   toDo_id: ,
-      //   notToDo_Id:
+      userId: userId,
+      name: name,
+      color: color,
     });
 
     res.status(200).json({ message: "테마 생성에 성공하셨습니다." });
