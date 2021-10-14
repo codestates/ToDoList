@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ChangePassword from "./utils/ChangePassword";
 import Theme from "./utils/Theme";
 
@@ -13,6 +13,10 @@ function MyPage({ AccessToken, UserId }) {
   return (
     <div>
       {/* 비밀번호 변경 */}
+      <div className='login-center'>
+      <div className="login-container" id="container">
+
+
       <ChangePassword AccessToken={AccessToken} />
       {/* 테마 변경 */}
       <br />
@@ -22,7 +26,7 @@ function MyPage({ AccessToken, UserId }) {
         AccessToken={AccessToken}
         UserId={UserId}
       />
-    </div>
+    </div></div></div>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
-import "./Register.css";
+import "./Login.css";
 
 function Login({ TokenSave }) {
   const [Id, setId] = useState("");
@@ -47,17 +47,17 @@ function Login({ TokenSave }) {
     history.push("/register");
   };
   return (
-    <div className='center'>
+    <div className='login-center'>
 
       <Link to="/">
-      <h1 className='head'>SBS</h1>
+      <h1 className='login-head'>SBS</h1>
       </Link>
-      <div className="container" id="container">
-        <div className="form-container sign-in-container">
-          <form onSubmit={submitHandler}>
+      <div className="login-container" id="container">
+        <div className="login-form-container login-sign-in-container">
+          <form className="login-form" onSubmit={submitHandler}>
             <h1>환영합니다!</h1>
 
-            <div className="social-container"></div>
+            <div className="login-social-container"></div>
             <span></span>
             <input
             className='login'
@@ -76,15 +76,15 @@ function Login({ TokenSave }) {
               placeholder="비밀번호"
             />
             <Link to="/forgotpage">비밀번호를 잊어버리셨나요?</Link>
-            <button type="submit">로그인</button>
+            <button className ="login-btn"type="submit">로그인</button>
           </form>
         </div>
-        <div className="overlay-container">
-          <div className="overlay">
-            <div className="overlay-panel overlay-right">
-              <h1>안녕하세요! 반가워요!</h1>
-              <p>아이디가 없으시다면 아래 버튼을 눌러주세요!</p>
-              <button className="ghost" id="signUp" onClick={moveRegister}>
+        <div className="login-overlay-container">
+          <div className="login-overlay">
+            <div className="login-overlay-panel login-overlay-right">
+              <h1 className="login-h1">안녕하세요! 반가워요!</h1>
+              <p className="login-p">아이디가 없으시다면 아래 버튼을 눌러주세요!</p>
+              <button className="ghost login-btn" id="signUp" onClick={moveRegister}>
                 회원가입
               </button>
             </div>

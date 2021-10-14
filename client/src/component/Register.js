@@ -52,19 +52,19 @@ function Register() {
   };
 
   return (
-    <div className='center'>
+    <div className='register-center'>
 
       <Link to="/">
-      <h1 className='head'>SBS</h1>
+      <h1 className='register-head'>SBS</h1>
 
       </Link>
-      <div className="container" id="container">
-        <div className="form-container sign-in-container">
-          <form onSubmit={submitHandler}>
-          <h1 className='head'>가입을 시작합니다!</h1>
+      <div className="register-container" id="container">
+        <div className="register-form-container register-sign-in-container">
+          <form className="login-form" onSubmit={submitHandler}>
+          <h1 className='register-head'>가입을 시작합니다!</h1>
 
-            <div className="social-container">{/* Google, kakao auth */}</div>
-            <span>아래 내용을 빠짐없이 입력해주세요.</span>
+            <div className="register-social-container">{/* Google, kakao auth */}</div>
+            <span className = "register-span">아래 내용을 빠짐없이 입력해주세요.</span>
             <input
             className='login'
 
@@ -101,18 +101,18 @@ function Register() {
               onChange={QuestionHandler}
               placeholder="졸업한 초등학교는?"
             />
-            <span className="ptext">
+            <span className="register-span">
               위 질문은 비밀번호를 잊어버렸을 경우 사용 됩니다.
             </span>
-            <button type="submit">회원가입</button>
+            <button className="login-btn" type="submit">회원가입</button>
           </form>
         </div>
-        <div className="overlay-container">
-          <div className="overlay">
-            <div className="overlay-panel overlay-right">
-              <h1>안녕하세요! 반가워요!</h1>
-              <p>사용 중인 아이디가 있다면,아래 버튼을 눌러주세요.</p>
-              <button className="ghost" id="signUp" onClick={moveLogin}>
+        <div className="login-overlay-container">
+          <div className="login-overlay">
+            <div className="login-overlay-panel login-overlay-right">
+              <h1 className='login-h1'>안녕하세요! 반가워요!</h1>
+              <p className ="login-p">사용 중인 아이디가 있다면,아래 버튼을 눌러주세요.</p>
+              <button className="ghost login-btn" id="signUp" onClick={moveLogin}>
                 로그인
               </button>
             </div>

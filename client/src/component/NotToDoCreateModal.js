@@ -1,26 +1,27 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import "./CreateModal.css";
 
 function NotToDoCreateModal({ date, userId, changeListHandler }) {
-  const [NotToDoList, setNotToDoList] = useState();
-  const [NotToDoStartTime, setNotToDoStartTime] = useState();
-  const [NotToDoEndTime, setNotToDoEndTime] = useState();
-  const [NotToDoTheme, setNotTodoTheme] = useState("");
-  const [NotToDoThemeName, setNotToDoThemeName] = useState([]);
+  const [NotToDoList, setNotToDoList] = useState("");
+  const [NotToDoStartTime, setNotToDoStartTime] = useState("00:00");
+  const [NotToDoEndTime, setNotToDoEndTime] = useState("00:00");
+  const [NotToDoTheme, setNotTodoTheme] = useState([]);
+  const [NotToDoThemeName, setNotToDoThemeName] = useState("");
 
-  const NotToDoListHandler = (e) => {
+  const NotToDoListHandler = e => {
     setNotToDoList(e.target.value);
   };
 
-  const NotToDoStartTimeHandler = (e) => {
+  const NotToDoStartTimeHandler = e => {
     setNotToDoStartTime(e.target.value);
   };
 
-  const NotToDoEndTimeHandler = (e) => {
+  const NotToDoEndTimeHandler = e => {
     setNotToDoEndTime(e.target.value);
   };
 
-  const NotaddToDoListHandler = (e) => {
+  const NotaddToDoListHandler = e => {
     e.preventDefault();
     let data = {
       userId: userId,
@@ -35,16 +36,15 @@ function NotToDoCreateModal({ date, userId, changeListHandler }) {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
-      .then((res) => {
+      .then(res => {
         console.log(res.data);
         changeListHandler();
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   };
-
-  const ThemeHandler = (e) => {
+  const ThemeHandler = e => {
     e.preventDefault();
     setNotTodoTheme(e.target.value);
     // console.log(e.target.value);
@@ -58,10 +58,10 @@ function NotToDoCreateModal({ date, userId, changeListHandler }) {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
-      .then((res) => {
+      .then(res => {
         console.log(res.data.allTheme);
         let newNotToDoThemeName = [...NotToDoThemeName];
-        res.data.allTheme.forEach((theme) => {
+        res.data.allTheme.forEach(theme => {
           newNotToDoThemeName.push(theme.name);
         });
         setNotToDoThemeName(newNotToDoThemeName);
@@ -70,7 +70,7 @@ function NotToDoCreateModal({ date, userId, changeListHandler }) {
 
   return (
     <>
-      <div className="insert-backgrund">
+      <div className="create-wrapper">
         <form>
           <label>LIST: </label>
           <input type="text" onChange={NotToDoListHandler} placeholder="LIST" />
@@ -87,7 +87,12 @@ function NotToDoCreateModal({ date, userId, changeListHandler }) {
             placeholder="END TIME"
           />
           <label>THEME: </label>
-          <select name="theme" id="theme-select" onChange={ThemeHandler}>
+          <select
+            className="create-select"
+            name="theme"
+            id="theme-select"
+            onChange={ThemeHandler}
+          >
             <option value="">--Please choose an THEME--</option>
             {NotToDoThemeName &&
               NotToDoThemeName.map((a, index) => (
@@ -96,13 +101,12 @@ function NotToDoCreateModal({ date, userId, changeListHandler }) {
                 </option>
               ))}
           </select>
-          {/* <input
-            type="text"
-            onChange={NotToDoThemeHandler}
-            placeholder="THEME"
-          /> */}
-          <button type="submit" onClick={NotaddToDoListHandler}>
-            O submit
+          <button
+            className="create-btn"
+            type="submit"
+            onClick={NotaddToDoListHandler}
+          >
+            SUBMIT
           </button>
         </form>
       </div>
