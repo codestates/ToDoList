@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom'
 import axios from "axios";
 import Slider from "./utils/Slider";
-import Slide from "./utils/Slide";
-import "./sass.scss"
 import ImageSlide from "./utils/ImgSlider";
 import images from "./images"
+import "./LandingPage.css"
 
 function LandingPage({ AccessToken }) {
   const [Token, setToken] = useState("");
@@ -18,10 +17,14 @@ function LandingPage({ AccessToken }) {
   }
   const b =()=>{
   setImages(images[1].src)
- }
- const c =()=>{
+  }
+  const c =()=>{
   setImages(images[2].src)
- }
+  }
+
+
+
+
 
 
   useEffect(() => {
@@ -51,29 +54,39 @@ function LandingPage({ AccessToken }) {
 
   return (
     <>
-    <div className='projects-section' >
-    <div className='projects-section-header'>
-      <Link to='/'><p>SBS</p></Link>
-<Link to='/mypage'><p className='time'>{UserName}님 반갑습니다!</p ></Link>
-</div>
-
-        
-<div></div>
-<ImageSlide />
-<Slider />
-<div>
-  
-<ul className='nodot'>
-  <div className='clickchange'>아래 버튼을 눌러 기능을 확인해 보세요!</div>
-<li className='buttonfor' onClick={a}><span>TODO</span></li>
-<li className='buttonfor' onClick={b}><span>NOT TO DO</span></li>
-<li className='buttonfor' onClick={c}><span>LIST</span></li>
-</ul>
-<img className='for' src={Images} />
-</div>
-</div> 
-
- </> );
+    <div className="landingPage-section" >
+      <div className='landingPage-section-header'>
+        <Link to='/'>
+          <p className='landingPage-time'>SBS</p>
+        </Link>
+        <Link to='/mypage'>
+          <p className='landingPage-time'>
+            {UserName}님 반갑습니다!
+          </p>
+        </Link>
+      </div>
+        <ImageSlide/>
+        <Slider />
+      <div className = "landingPage-explanation-container">
+        <ul className='landingPage-explanation'>
+          <div className='landingPage-clickchange'>
+            아래 버튼을 눌러 기능을 확인해 보세요!
+          </div>
+          <li className='landingPage-buttonfor'>
+            <span className="landingPage-span" onClick={a}>TODO</span>
+          </li>
+          <li className='landingPage-buttonfor'>
+            <span className="landingPage-span" onClick={b}>NOT TO DO</span>
+          </li>
+          <li className='landingPage-buttonfor'>
+            <span className="landingPage-span" onClick={c}>LIST</span>
+          </li>
+        </ul>   
+        <img className='landingPage-img' src={Images} />
+      </div>
+    </div> 
+  </> 
+  );
 }
 
 export default LandingPage;

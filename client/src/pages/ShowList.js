@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import axios from "axios";
-import "./ShowList.css"
-
-
+import styled from "styled-components";
+import "./ShowList.css";
 
 const Container = styled.div`
+  color: black;
   text-align: center;
   height: 40rem;
   margin: 20px auto;
@@ -33,105 +32,129 @@ export default function ShowList({
         },
         { withCredentials: true }
       )
-      .then((res) => {
+      .then(res => {
         // console.log(res.data.userInfo);
         ToDoListHandler(res.data.userInfo.id);
         NotToDoListHandler(res.data.userInfo.id);
         // id 저장하고, 그 id로 다시 todo list post 요청
       });
   }, []);
+  console.log(ToDoList);
+
+  function simpleTime(time) {
+    //시-분-초 형태로 된 시간 데이터를 시-분으로 간단히 변경하기 위한 함수
+    if (!time) return time;
+    return time[0] + time[1] + time[2] + time[3] + time[4];
+  }
 
   return (
     <>
-    <div className="projects-section"> <div class="projects-section-header"><p>Projects</p><p class="time">{date}</p> </div> 
       {ToDoList || NotToDoList ? (
-        <>
-          {ToDoList ? (
-            <div className="app-container">
-            <div className = "app-content">
-              <div className = "projects-seaction">
-                <div className = "pojects-section-header">
-                  <p>Projects</p>
-                  <p className="time">Decemder, 12</p>
-                </div>
-                <div className = "projects-boxes jsGridView">
-                  <div className="project-box-wrapper">
-                    <div className="project-box" style={{ backgroundColor: "#fee4cd" }}>
-                      <div className="project-box-header">
-                        <span>December 10, 2020</span>
-                        <div className="more-wrapper">
-                          <button className="project-btn-more">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-more-vertical">
-                              <circle cx="12" cy="12" r="1" />
-                              <circle cx="12" cy="5" r="1" />
-                              <circle cx="12" cy="19" r="1" /></svg>
-                          </button>
-                        </div>
-                      </div>
-                        <div className="project-box-content-header">
-                          <p className="box-content-header">Web Designing</p>
-                          <p className="box-content-subheader">Prototyping</p>
-                        </div>
-                        <div className="project-box-footer">
-                          <div className="days-left" style={{ color: "#ff942e" }}>
-                            2 Days Left
+        <div className="showlist-contanier">
+          <div className="showlist-box">
+            {ToDoList ? (
+              <div className="app-container">
+                <div className="app-content">
+                  <div className="projects-section-header">
+                    <span>TO DO LIST</span>
+                  </div>
+                  <div className="projects-section">
+                    {ToDoList.map(todo => {
+                      return (
+                        <div key={todo.id} className="projects-boxes">
+                          <div className="project-box-wrapper">
+                            <div
+                              className="project-box"
+                              style={{ backgroundColor: "#fee4cd" }}
+                            >
+                              <div className="project-box-header">
+                                <span>{date}</span>
+                              </div>
+                              <div className="project-box-content-header">
+                                <p className="box-content-header">
+                                  {todo.list}
+                                </p>
+                                <p className="box-content-subheader">
+                                  {simpleTime(todo.startTime)}~
+                                  {simpleTime(todo.endTime)}
+                                </p>
+                                <p className="box-content-subheader">
+                                  {todo.theme}
+                                </p>
+                              </div>
+                              <div className="project-box-footer">
+                                <div
+                                  className="days-left"
+                                  style={{ color: "#ff942e" }}
+                                >
+                                  2 Days Left
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          ) : null}
-          <br></br>
-          <br></br>
-          {NotToDoList ? (
-            <div className="app-container">
-            <div className = "app-content">
-              <div className = "projects-seaction">
-                <div className = "pojects-section-header">
-                  <p>Projects</p>
-                  <p className="time">Decemder, 12</p>
-                </div>
-                <div className = "projects-boxes jsGridView">
-                  <div className="project-box-wrapper">
-                    <div className="project-box" style={{ backgroundColor: "#fee4cd" }}>
-                      <div className="project-box-header">
-                        <span>December 10, 2020</span>
-                        <div className="more-wrapper">
-                          <button className="project-btn-more">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-more-vertical">
-                              <circle cx="12" cy="12" r="1" />
-                              <circle cx="12" cy="5" r="1" />
-                              <circle cx="12" cy="19" r="1" /></svg>
-                          </button>
-                        </div>
-                      </div>
-                        <div className="project-box-content-header">
-                          <p className="box-content-header">Web Designing</p>
-                          <p className="box-content-subheader">Prototyping</p>
-                        </div>
-                        <div className="project-box-footer">
-                          <div className="days-left" style={{ color: "#ff942e" }}>
-                            2 Days Left
+            ) : null}
+            {NotToDoList ? (
+              <div className="app-container">
+                <div className="app-content">
+                  <div className="projects-section-header">
+                    <span>NOT TO DO LIST</span>
+                  </div>
+                  <div className="projects-section">
+                    {NotToDoList.map(nottodo => {
+                      return (
+                        <div key={nottodo.id} className="projects-boxes">
+                          <div className="project-box-wrapper">
+                            <div
+                              className="project-box"
+                              style={{ backgroundColor: "#fee4cd" }}
+                            >
+                              <div className="project-box-header">
+                                <span>{date}</span>
+                              </div>
+                              <div className="project-box-content-header">
+                                <p className="box-content-header">
+                                  {nottodo.list}
+                                </p>
+                                <p className="box-content-subheader">
+                                  {simpleTime(nottodo.startTime)}~
+                                  {simpleTime(nottodo.endTime)}
+                                </p>
+                                <p className="box-content-subheader">
+                                  {nottodo.theme}
+                                </p>
+                              </div>
+                              <div className="project-box-footer">
+                                <div
+                                  className="days-left"
+                                  style={{ color: "#ff942e" }}
+                                >
+                                  2 Days Left
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </div>
-          ) : null}
-        </>
+        </div>
       ) : (
-        <Container>
-          <h2><p className='h1'>To do list를 작성해주세요</p></h2>
-          <Link to="/list"><button className='pinky'><Link to="/list"><div className='white'>To do list 작성하러 가기</div></Link></button></Link>
-        </Container>
+        <div className="showlist-null-contanier">
+          <h2 className="showlist-null-h2">
+            <Link to="/list">TO DO LIST 작성하러 가기</Link>
+          </h2>
+        </div>
       )}
-      </div>
     </>
   );
 }

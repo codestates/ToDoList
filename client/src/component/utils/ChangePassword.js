@@ -24,17 +24,17 @@ function ChangePassword({ AccessToken }) {
         },
         { withCredentials: true }
       )
-      .then((res) => {
+      .then(res => {
         // console.log(res.data);
         setUserInfo(res.data.userInfo);
       });
   }, []);
 
-  const QuestionHandler = (e) => {
+  const QuestionHandler = e => {
     setQuestion(e.target.value);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = e => {
     e.preventDefault();
 
     if (UserInfo.question !== Question) {
@@ -47,10 +47,10 @@ function ChangePassword({ AccessToken }) {
 
     // 입력한 question과 db의 quesiotn이 같은지 확인후 같으면 password 변겨 Modal을 띄운다
   };
-  const NewPasswordHandler = (e) => {
+  const NewPasswordHandler = e => {
     setNewPassword(e.target.value);
   };
-  const ChangePasswordHandler = (e) => {
+  const ChangePasswordHandler = e => {
     e.preventDefault();
     // console.log(NewPassword);
     let body = {
@@ -61,7 +61,7 @@ function ChangePassword({ AccessToken }) {
       .post("https://localhost:5000/changepassword", body, {
         withCredentials: true,
       })
-      .then((res) => {
+      .then(res => {
         // console.log(res.data);
         if (res.data.message) {
           history.push("/login");
@@ -71,8 +71,8 @@ function ChangePassword({ AccessToken }) {
 
   return (
     <div>
-      <form onSubmit={submitHandler}>
-        <h1>
+      <form class="tired" onSubmit={submitHandler}>
+        <h1 className="sosleepy">
           비밀번호를 변경하고 싶으시면 회원가입때 작성하신 질문에 답변해주세요.
         </h1>
         <input
@@ -85,7 +85,7 @@ function ChangePassword({ AccessToken }) {
         <button type="submit">확인</button>
       </form>
       {ChangePasswordModal ? (
-        <form onSubmit={ChangePasswordHandler}>
+        <form class="sotired" onSubmit={ChangePasswordHandler}>
           <input
             required
             type="password"

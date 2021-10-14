@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Slide from "./Slide";
-import "../Register.css";
+import "./Slider.css";
 
 const TOTAL_SLIDES = 4;
 export default function Slider() {
@@ -22,13 +22,13 @@ export default function Slider() {
   };
 
   return (
-    <div className="forcenter">
+    <div className="slider-center">
       <Slide id={currentSlide} />
       <div className="acenter">
-        <button className="slideButton" onClick={prevSlide}>
+        <button className="slide-Btn" onClick={prevSlide}>
           Previous Slide
         </button>
-        <button className="slideButton" onClick={nextSlide}>
+        <button className="slide-Btn" onClick={nextSlide}>
           Next Slide
         </button>
       </div>

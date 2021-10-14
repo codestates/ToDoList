@@ -81,13 +81,13 @@ function NavBar({ AccessToken }) {
           </Link>
         </li>
         <Link to="/mypage">
-          <svg className="login" width="30px" height="30px"></svg>
-          <span title="login">my page</span>
+          <svg className="mypage" width="30px" height="30px"></svg>
+          <span title="my page">my page</span>
         </Link>
         <li onClick={LogOutHandler}>
           <Link to="/">
-            <svg className="login" width="30px" height="30px"></svg>
-            <span title="login">{Login}</span>
+            <svg className="home" width="30px" height="30px"></svg>
+            <span title="home">{Login}</span>
           </Link>
         </li>
       </ul>

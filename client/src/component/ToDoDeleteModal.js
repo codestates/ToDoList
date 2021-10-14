@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
+import "./DeleteModal.css";
 import styled from "styled-components";
 
 export const ModalBackdrop = styled.div`
@@ -22,16 +22,18 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalBtn = styled.button`
-  background-color: #4000c7;
+  background-color: #fe2790;
   text-decoration: none;
   border: none;
-  padding: 15px;
+  padding: 3px;
+  opacity: 0.8;
   color: white;
+  float: left;
   border-radius: 30px;
-  cursor: grab;
+  cursor: pointer;
 `;
 
-export const ModalView = styled.div.attrs((props) => ({
+export const ModalView = styled.div.attrs(props => ({
   // attrs 메소드를 이용해서 아래와 같이 div 엘리먼트에 속성을 추가할 수 있습니다.
   role: "dialog",
 }))`
@@ -63,7 +65,6 @@ function ToDoDeleteModal({ id, changeListHandler }) {
   const CloseAndDeleteHandler = () => {
     setIsOpen(!isOpen);
     submitDeleteHandler();
-    changeListHandler();
   };
 
   const submitDeleteHandler = () => {
@@ -78,10 +79,11 @@ function ToDoDeleteModal({ id, changeListHandler }) {
           withCredentials: true,
         }
       )
-      .then((res) => {
+      .then(res => {
+        changeListHandler();
         console.log(res);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   };
@@ -94,8 +96,12 @@ function ToDoDeleteModal({ id, changeListHandler }) {
         </ModalBtn>
         {isOpen === true ? (
           <ModalBackdrop>
-            <ModalBtn onClick={CloseModalHandler}>취소</ModalBtn>
-            <ModalBtn onClick={CloseAndDeleteHandler}>삭제 완료</ModalBtn>
+            <button className="delete-btn" onClick={CloseModalHandler}>
+              취소
+            </button>
+            <button className="delete-btn" onClick={CloseAndDeleteHandler}>
+              삭제 완료
+            </button>
           </ModalBackdrop>
         ) : null}
       </ModalContainer>

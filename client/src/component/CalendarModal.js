@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import PickDate from './PickDate'
+import { useState } from "react";
+import PickDate from "./PickDate";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -10,7 +10,7 @@ export const ModalBackdrop = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-items: center;
 `;
@@ -22,7 +22,7 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalBtn = styled.button`
-  background-color: #FE2790;
+  background-color: #fe2790;
   text-decoration: none;
   border: none;
   padding: 15px;
@@ -30,28 +30,28 @@ export const ModalBtn = styled.button`
   border-radius: 30px;
   cursor: pointer;
   opacity: 0.8;
-  font-size : 1em;
+  font-size: 1em;
 `;
 
 export const ModalView = styled.div.attrs(props => ({
   // attrs 메소드를 이용해서 아래와 같이 div 엘리먼트에 속성을 추가할 수 있습니다.
-  role: 'dialog'
+  role: "dialog",
 }))`
-    border-radius: 10px;
-    background-color: #ffffff;
-    width: 300px;
-    height: 100px;
-    > div.close_btn {
-      margin-top: 5px;
-      cursor: pointer;
-    }
-    > div.desc {
-      margin-top: 25px;
-      color: #4000c7;
-    }
+  border-radius: 10px;
+  background-color: #ffffff;
+  width: 300px;
+  height: 100px;
+  > div.close_btn {
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  > div.desc {
+    margin-top: 25px;
+    color: #4000c7;
+  }
 `;
 
-function CalendarModal ( {setDate} ) {
+function CalendarModal({ setDate }) {
   const [isOpen, setIsOpen] = useState(false);
   const openModalHandler = () => {
     setIsOpen(!isOpen);
@@ -59,17 +59,21 @@ function CalendarModal ( {setDate} ) {
 
   return (
     <>
-    <ModalContainer>
+      <ModalContainer>
         <ModalBtn onClick={openModalHandler}>
-          {isOpen === false ? 'Calendar' : 'Change'}
+          {isOpen === false ? "Calendar" : "Change"}
         </ModalBtn>
-        {isOpen === true ? <ModalBackdrop>
+        {isOpen === true ? (
+          <ModalBackdrop>
             <PickDate setSimpleDate={setDate} />
-            <ModalBtn onClick={openModalHandler}>날짜 변경 완료</ModalBtn>
-        </ModalBackdrop> : null}
-    </ModalContainer>
+            <button className="create-btn" onClick={openModalHandler}>
+              날짜 변경 완료
+            </button>
+          </ModalBackdrop>
+        ) : null}
+      </ModalContainer>
     </>
   );
-};
+}
 
 export default CalendarModal;

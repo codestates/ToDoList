@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import "../Register.css";
+import React, { useState } from "react";
+import "./ImgSlider.css";
 import welcome from "../../images/WELCOME.jpg"
 import enjoy from'../../images/ENJOY-3.jpg'
 import todo from '../../images/TO DO-2.jpg'
@@ -19,6 +19,8 @@ if(Images === welcome){
 } 
 
   return (
-    <img className='background'src={Images} onClick={click}></img>
-  );
+      <img className='imgSlider-background' src={Images} onClick={click}></img>
+    // <div className= "img-container">
+    // </div>
+    );
 }

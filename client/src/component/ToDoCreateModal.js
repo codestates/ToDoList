@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import "./CreateModal.css";
 
 function ToDoCreateModal({ date, userId, changeListHandler }) {
   const [ToDoList, setToDoList] = useState("");
@@ -8,19 +9,19 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
   const [ToDoThemeName, setToDoThemeName] = useState([]);
   const [TodoTheme, setTodoTheme] = useState("");
 
-  const ToDoListHandler = (e) => {
+  const ToDoListHandler = e => {
     setToDoList(e.target.value);
   };
 
-  const ToDoStartTimeHandler = (e) => {
+  const ToDoStartTimeHandler = e => {
     setToDoStartTime(e.target.value);
   };
 
-  const ToDoEndTimeHandler = (e) => {
+  const ToDoEndTimeHandler = e => {
     setToDoEndTime(e.target.value);
   };
 
-  const addToDoListHandler = (e) => {
+  const addToDoListHandler = e => {
     // create 요청 핸들러
     e.preventDefault();
     let data = {
@@ -36,11 +37,11 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
-      .then((res) => {
+      .then(res => {
         console.log(res);
         changeListHandler();
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
 
@@ -50,17 +51,17 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
   // axios로 theme 불러와서 themename만 저장
 
   useEffect(() => {
-    axios.get(`https://localhost:5000/allTheme/${userId}`).then((res) => {
+    axios.get(`https://localhost:5000/allTheme/${userId}`).then(res => {
       console.log(res.data.allTheme);
       let newNotToDoThemeName = [...ToDoThemeName];
-      res.data.allTheme.forEach((theme) => {
+      res.data.allTheme.forEach(theme => {
         newNotToDoThemeName.push(theme.name);
       });
       setToDoThemeName(newNotToDoThemeName);
     });
   }, []);
 
-  const ThemeHandler = (e) => {
+  const ThemeHandler = e => {
     e.preventDefault();
     setTodoTheme(e.target.value);
     // console.log(e.target.value);
@@ -68,7 +69,7 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
 
   return (
     <>
-      <div className="insert-backgrund">
+      <div className="create-wrapper">
         <form>
           <label>LIST: </label>
           <input type="text" onChange={ToDoListHandler} placeholder="LIST" />
@@ -86,7 +87,12 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
           />
 
           <label>THEME: </label>
-          <select name="theme" id="theme-select" onChange={ThemeHandler}>
+          <select
+            className="create-select"
+            name="theme"
+            id="theme-select"
+            onChange={ThemeHandler}
+          >
             <option value="">--Please choose an THEME--</option>
             {ToDoThemeName &&
               ToDoThemeName.map((a, index) => (
@@ -96,7 +102,11 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
               ))}
           </select>
 
-          <button type="submit" onClick={addToDoListHandler}>
+          <button
+            className="create-btn"
+            type="submit"
+            onClick={addToDoListHandler}
+          >
             SUBMIT
           </button>
         </form>
